@@ -1,13 +1,18 @@
 const express = require('express');
 const router = express();
 
-//Models
-const Usuario = require('../controllers/usuario');
-const Rol = require('../controllers/rol');
+//Controllers
+const activoController = require('../controllers/activotest');
+
 
 //Routes
-router.post('/api/activos/init', activos.init);
-router.get('/api/activos/', activos.findAll);
-router.get('/api/activos/:id', activos.findById);
+router.route('/api/activos').get(activoController.getActivos);
+router.route('/api/activo/:idActivo').get(activoController.getActivo);
+router.route('/api/activo').post(activoController.newActivo);
+router.route('/api/activo/:idRol/:idUsuario').post(activoController.newActivo)
+router.route('/api/activo/:idUsuario/:idRol').get(activoController.getActivosByUserByRol)
+
+
+
 
 module.exports = router;

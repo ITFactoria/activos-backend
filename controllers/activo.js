@@ -12,8 +12,8 @@ const Activo = require('../models/activo')
 router.get('/activos/roles/:idRol', (req, res) => {
     //let idUsuario = req.params.idUsuario;
     let idRol = req.params.idRol;
-    console.log("datosconsulta: ",idRol);
-    Activo.find({ rol: idRol})
+    console.log("datosconsulta: ", idRol);
+    Activo.find({ rol: idRol })
         .exec((err, activos) => {
             if (err) {
                 if (err.kind === 'ObjectId') {
@@ -43,8 +43,8 @@ router.get('/activos/roles/usuario/:idRol/:idUsuario', (req, res) => {
     let idRol = req.params.idRol;
     let idUsuario = req.params.idUsuario;
 
-    console.log("datosconsulta: ",idRol, idUsuario);
-    Activo.find({ rol: idRol, usuario: idUsuario})
+    console.log("datosconsulta: ", idRol, idUsuario);
+    Activo.find({ rol: idRol, usuario: idUsuario })
         .exec((err, activos) => {
             if (err) {
                 if (err.kind === 'ObjectId') {
@@ -72,8 +72,8 @@ router.get('/activos/roles/usuario/:idRol/:idUsuario', (req, res) => {
 router.get('/activos/usuario/:idUsuario', (req, res) => {
     let idUsuario = req.params.idUsuario;
 
-    console.log("getAssetsByUser_datosconsulta: ",idUsuario);
-    Activo.find({ usuario: idUsuario})
+    console.log("getAssetsByUser_datosconsulta: ", idUsuario);
+    Activo.find({ usuario: idUsuario })
         .exec((err, activos) => {
             if (err) {
                 if (err.kind === 'ObjectId') {
@@ -97,7 +97,33 @@ router.get('/activos/usuario/:idUsuario', (req, res) => {
 
 })
 
+//getActivo
+getActivo: async (req, res, next) => {
+    console.log("getActivo");
+    const { idActivo } = req.params;
+    const activo = await Activo.findById(idActivo, (err, activo) => {
+        if (err) {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).json({
+                    err: err,
+                    message: `Error: Activo no encontrado para el id ${idActivo}`
+                })
+            }
+            return res.status(500).json({
+                err: err,
+                message: `Error: Consulta de activo no exitosa para el activo ${idActivo}`
+            })
+        }
+        else {
+            res.json({
+                status: "ok",
+                activo: activo
+            })
+        }
+    });
 
+
+}
 
 //INIT Activos
 //Create: POST HOST/activos

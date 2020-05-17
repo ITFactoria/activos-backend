@@ -17,6 +17,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+//Routes
+app.use(require('../routes/activo'));
+app.use(require('../routes/usuario'));
+app.use(require('../routes/rol'));
+app.use(require('../routes/usurolact'));
+
+
 //Controllers
 app.use(require('../controllers/activo'));
 app.use(require('../controllers/usuario'));
@@ -29,7 +36,7 @@ app.use(require('../controllers/rol'));
     console.log("Base de datos Online");
 });*/
 
-mongoose.connect('mongodb://localhost:27017/activos',{
+mongoose.connect('mongodb://localhost:27017/activostest',{
     useCreateIndex : true, 
     useNewUrlParser: true, 
     useFindAndModify: false,
